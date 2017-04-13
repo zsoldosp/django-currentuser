@@ -33,7 +33,7 @@ Then use it in a project::
 Release Notes
 -------------
 
-* 0.1.0 - initial release (2017-04-13)
+* 0.1.0 - initial release
 
   * provides middleware + methods to set + retrieve reference of currenty logged in user from thread
   * provides CurrentUserField that by default stores the currently logged in user
