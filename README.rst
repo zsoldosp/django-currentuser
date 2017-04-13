@@ -18,15 +18,25 @@ Install django-currentuser::
 
     pip install django-currentuser
 
+Add it to the middleware classes in your settings.py::
+
+    MIDDLEWARE_CLASSES = (
+        ...,
+        'django_currentuser.middleware.ThreadLocalUserMiddleware',
+    )
+
 Then use it in a project::
 
-    import django_currentuser
+    from django_currentuser.middleware import (
+        get_current_user, get_current_authenticated_user)
 
 Release Notes
 -------------
 
 * 0.1.0 - initial release (2017-04-13)
 
+  * provides middleware + methods to set + retrieve reference of currenty logged in user from thread
+  * provides CurrentUserField that by default stores the currently logged in user
   * supports Django 1.8, 1.9, 1.10, 1.11 on python 2.7, 3.3, 3.4, 3.5, and 3.6 - as per the
     `official django docs <https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django>`_
 
