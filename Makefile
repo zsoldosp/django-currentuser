@@ -1,5 +1,5 @@
 .PHONY: clean-pyc clean-build docs clean-tox
-PYPI_SERVER?=https://pypi.com/
+PYPI_SERVER?=pypi
 GIT_REMOTE_NAME?=origin
 SHELL=/bin/bash
 VERSION=$(shell python -c"import django_currentuser as m; print(m.__version__)")
