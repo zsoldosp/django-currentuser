@@ -47,8 +47,7 @@ class TestSetUserToThread(TestCase):
 
     def login_and_go_to_homepage(self, username, password):
         data = {"username": username, "password": password}
-        result = self.client.post(reverse("login"), follow=True, data=data)
-        self.assertTrue(result.context['user'].is_active)
+        self.client.post(reverse("login"), follow=True, data=data)
         self.client.get('/')
 
 
