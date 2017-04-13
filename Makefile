@@ -27,6 +27,7 @@ clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
+	find . -name '__pycache__' -type d -exec rm -rf {} +
 
 lint:
 	flake8 django_currentuser tests --max-complexity=10
