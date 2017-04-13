@@ -1,7 +1,9 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
+from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 
-urlpatterns = [
-    #url(r'^admin/', include(admin.site.urls), {}, "admin-index"),
-    # url(r'^some-path/$', some_view, {}, 'some_view'),
-]
+urlpatterns = (
+    url(r'^$', TemplateView.as_view(template_name="home.html"), name="home"),
+    url(r'^login/$', auth_views.login, name="login"),
+)
