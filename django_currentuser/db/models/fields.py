@@ -15,6 +15,8 @@ class CurrentUserField(models.ForeignKey):
     def __init__(self, *a, **kw):
         if a or set(kw).intersection({"default", "null", "to"}):
             warnings.warn(self.warning)
+        if "on_delete" not in kw:
+            kw["on_delete"] = models.CASCADE
         kw.update(dict(null=True, default=get_current_authenticated_user,
                        to="auth.User"))
         super(CurrentUserField, self).__init__(**kw)

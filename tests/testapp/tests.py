@@ -1,8 +1,9 @@
 import warnings
 
-from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User, AnonymousUser, Group
 from django.core.urlresolvers import reverse
+from django.db import models
 from django.test.testcases import TestCase
 
 from hamcrest import assert_that, instance_of, equal_to, is_, empty, has_length
@@ -36,11 +37,11 @@ class TestSetUserToThread(TestCase):
         self.assertIsNone(get_current_user())
 
         self.login_and_go_to_homepage(username="user1", password="pw1")
-        self.assertEquals(self.user1, get_current_user())
+        self.assertEqual(self.user1, get_current_user())
         self.client.logout()
 
         self.login_and_go_to_homepage(username="user2", password="pw2")
-        self.assertEquals(self.user2, get_current_user())
+        self.assertEqual(self.user2, get_current_user())
         self.client.logout()
 
         self.client.get("/")
@@ -105,9 +106,8 @@ class CurrentUserFieldTestCase(TestCase):
                         is_([CurrentUserField.warning] * 4))
 
     def test_is_a_nullable_fk_to_the_user_model(self):
-        # TODO: for the time being, hardcoded django.contrib.auth.models.user
         field = self.field_cls()
-        assert_that(field.rel.to, is_(equal_to('auth.User')))
+        assert_that(field.rel.to, is_(equal_to(settings.AUTH_USER_MODEL)))
         assert_that(field.null, is_(True))
 
     def test_default_value_is_get_current_django_user(self):
