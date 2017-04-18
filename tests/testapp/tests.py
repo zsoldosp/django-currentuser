@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, AnonymousUser, Group
 from django.core.urlresolvers import reverse
 from django.test.testcases import TestCase
 
-from hamcrest import assert_that, instance_of, equal_to, is_, not_
+from hamcrest import assert_that, instance_of, equal_to, is_, empty
 try:
     from unittest.mock import patch
 except ImportError:
@@ -78,16 +78,15 @@ class CurrentUserField(TestCase):
         assert_that(issubclass(self.field_cls, models.ForeignKey), is_(True))
 
     @patch.object(models.ForeignKey, "__init__")
-    def test_ignores_received_args_and_kwargs(self, mock_fk_init):
-        """ needed for south migrations """
-        self.field_cls(Group, to_field='foo', some='kwarg')
+    def test_ignores_args_and_kwargs_for_default_null_and_to(self,
+                                                             mock_fk_init):
+        self.field_cls(Group, default="foo", null="bar", to='baz')
 
         assert_that(mock_fk_init.was_called)
         assert_that(mock_fk_init.call_count, equal_to(1))
         args, kwargs = mock_fk_init.call_args
-        assert_that(args, not_(equal_to(Group)))
-        assert_that(kwargs, not_(equal_to(dict(some='kwarg'))))
-        # TODO: oversimplification but good enough for now
+        assert_that(args, empty())
+        assert_that(set(kwargs).intersection({"foo", "bar", "baz"}), empty())
 
     def _test_when_arguments_are_passed_a_warning_is_raised(self):
         # TODO: stretch goal
