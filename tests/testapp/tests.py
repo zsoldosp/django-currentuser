@@ -1,9 +1,11 @@
+import warnings
+
 from django.db import models
 from django.contrib.auth.models import User, AnonymousUser, Group
 from django.core.urlresolvers import reverse
 from django.test.testcases import TestCase
 
-from hamcrest import assert_that, instance_of, equal_to, is_, empty
+from hamcrest import assert_that, instance_of, equal_to, is_, empty, has_length
 try:
     from unittest.mock import patch
 except ImportError:
@@ -70,9 +72,13 @@ class GetCurrentPersistedUserTestCase(TestCase):
             get_current_authenticated_user(), equal_to(expected_persisted))
 
 
-class CurrentUserField(TestCase):
+class CurrentUserFieldTestCase(TestCase):
 
     field_cls = CurrentUserField
+
+    def setUp(self):
+        super(CurrentUserFieldTestCase, self).setUp()
+        warnings.simplefilter("always")
 
     def test_is_a_foreignkey(self):
         assert_that(issubclass(self.field_cls, models.ForeignKey), is_(True))
@@ -88,9 +94,15 @@ class CurrentUserField(TestCase):
         assert_that(args, empty())
         assert_that(set(kwargs).intersection({"foo", "bar", "baz"}), empty())
 
-    def _test_when_arguments_are_passed_a_warning_is_raised(self):
-        # TODO: stretch goal
-        pass
+    def test_warning_is_raised_when_forbidden_arguments_are_passed(self):
+        with warnings.catch_warnings(record=True) as my_warnings:
+            self.field_cls(Group)
+            self.field_cls(default="foo")
+            self.field_cls(null="bar")
+            self.field_cls(to='baz')
+            assert_that(my_warnings, has_length(4))
+            assert_that([str(m.message) for m in my_warnings],
+                        is_([CurrentUserField.warning] * 4))
 
     def test_is_a_nullable_fk_to_the_user_model(self):
         # TODO: for the time being, hardcoded django.contrib.auth.models.user
