@@ -7,14 +7,12 @@ from django.db import models
 from django.test.testcases import TestCase
 
 from hamcrest import assert_that, instance_of, equal_to, is_, empty, has_length
-try:
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
 
 from django_currentuser.middleware import (
     get_current_user, _set_current_user, get_current_authenticated_user)
 from django_currentuser.db.models import CurrentUserField
+
+from .sixmock import patch
 
 
 class TestSetUserToThread(TestCase):
