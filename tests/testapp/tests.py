@@ -55,20 +55,20 @@ class TestSetUserToThread(TestCase):
 class GetCurrentPersistedUserTestCase(TestCase):
 
     def test_if_user_is_none_it_is_none(self):
-        self.assert_becomes(current_user=None, expected_persisted=None)
+        self.assert_becomes(current_user=None, expected_thread_user=None)
 
     def test_if_user_then_its_the_user(self):
         user = User(email='jane@acme.org')
-        self.assert_becomes(current_user=user, expected_persisted=user)
+        self.assert_becomes(current_user=user, expected_thread_user=user)
 
     def test_if_anon_user_then_none(self):
         self.assert_becomes(
-            current_user=AnonymousUser(), expected_persisted=None)
+            current_user=AnonymousUser(), expected_thread_user=None)
 
-    def assert_becomes(self, current_user, expected_persisted):
+    def assert_becomes(self, current_user, expected_thread_user):
         _set_current_user(current_user)
         assert_that(
-            get_current_authenticated_user(), equal_to(expected_persisted))
+            get_current_authenticated_user(), equal_to(expected_thread_user))
 
 
 class CurrentUserFieldTestCase(TestCase):
