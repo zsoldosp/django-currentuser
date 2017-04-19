@@ -30,6 +30,11 @@ Then use it in a project::
     from django_currentuser.middleware import (
         get_current_user, get_current_authenticated_user)
 
+    # As model field:
+    from django_currentuser.db.models import CurrentUserField
+    class Foo(models.Model):
+        created_by = CurrentUserField()
+
 Release Notes
 -------------
 
