@@ -35,12 +35,28 @@ Then use it in a project::
     class Foo(models.Model):
         created_by = CurrentUserField()
 
+
+Differences to django-cuser
+---------------------------
+
+Both libraries serve the same purpose, but be aware of these
+differences (as of django-cuser v.2017.3.16):
+
+- django-currentuser's CurrentUserField stores the reference to the request user
+  at initialization of the model instance and still allows you to overwrite the
+  value before saving. django-cuser sets the value in the pre_save handler
+  of the field just before writing it to the database. Intermediate changes
+  will be ignored.
+
+- django-cuser deletes the user reference from the thread after finishing a
+  response and it will therefore no longer be available for testing purposes.
+
 Release Notes
 -------------
 
 * 0.1.0 - initial release
 
-  * provides middleware + methods to set + retrieve reference of currenty logged in user from thread
+  * provides middleware + methods to set + retrieve reference of currently logged in user from thread
   * provides CurrentUserField that by default stores the currently logged in user
   * supports Django 1.8, 1.9, 1.10, 1.11 on python 2.7, 3.3, 3.4, 3.5, and 3.6 - as per the
     `official django docs <https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django>`_
