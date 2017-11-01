@@ -11,12 +11,23 @@ class CurrentUserField(models.ForeignKey):
                "ignored. Avoid args and following kwargs: default, null, to.")
     description = _(
         'as default value sets the current logged in user if available')
+    defaults = dict(null=True, default=get_current_authenticated_user,
+                    to="auth.User")
 
-    def __init__(self, *a, **kw):
-        if a or set(kw).intersection({"default", "null", "to"}):
+    def __init__(self, *args, **kwargs):
+        self._warn_for_shadowing_args(*args, **kwargs)
+
+        if "on_delete" not in kwargs:
+            kwargs["on_delete"] = models.CASCADE
+
+        kwargs.update(self.defaults)
+        super(CurrentUserField, self).__init__(**kwargs)
+
+    def _warn_for_shadowing_args(self, *args, **kwargs):
+        if args:
             warnings.warn(self.warning)
-        if "on_delete" not in kw:
-            kw["on_delete"] = models.CASCADE
-        kw.update(dict(null=True, default=get_current_authenticated_user,
-                       to="auth.User"))
-        super(CurrentUserField, self).__init__(**kw)
+        else:
+            for key in set(kwargs).intersection(set(self.defaults.keys())):
+                if not kwargs[key] == self.defaults[key]:
+                    warnings.warn(self.warning)
+                    break
