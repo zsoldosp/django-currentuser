@@ -103,7 +103,7 @@ class CurrentUserFieldTestCase(TestCase):
             assert_that([str(m.message) for m in my_warnings],
                         is_([CurrentUserField.warning] * 4))
 
-    def test_no_warning_raised_when_passed_argument_values_match_defaults(self):
+    def test_no_warning_raised_if_passed_argument_values_match_defaults(self):
         with warnings.catch_warnings(record=True) as my_warnings:
             self.field_cls(default=get_current_authenticated_user)
             self.field_cls(null=True)
