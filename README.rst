@@ -54,6 +54,11 @@ differences (as of django-cuser v.2017.3.16):
 Release Notes
 -------------
 
+* 0.1.1 - minor release
+
+  * suppress warning for passed kwargs as long as they match the defaults (avoids them being printed during running
+    tests when fields are cloned)
+
 * 0.1.0 - initial release
 
   * provides middleware + methods to set + retrieve reference of currently logged in user from thread
