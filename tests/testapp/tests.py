@@ -93,7 +93,7 @@ class CurrentUserFieldTestCase(TestCase):
         assert_that(args, empty())
         assert_that(set(kwargs).intersection({"foo", "bar", "baz"}), empty())
 
-    def test_warning_is_raised_when_forbidden_arguments_are_passed_that_dont_match_defaults(self):
+    def test_raises_warning_when_non_default_arguments_are_passed(self):
         with warnings.catch_warnings(record=True) as my_warnings:
             self.field_cls(Group)
             self.field_cls(default="foo")
@@ -103,7 +103,7 @@ class CurrentUserFieldTestCase(TestCase):
             assert_that([str(m.message) for m in my_warnings],
                         is_([CurrentUserField.warning] * 4))
 
-    def test_no_warning_is_raised_when_forbidden_arguments_values_are_passed_that_match_defaults(self):
+    def test_no_warning_raised_when_passed_argument_values_match_defaults(self):
         with warnings.catch_warnings(record=True) as my_warnings:
             self.field_cls(default=get_current_authenticated_user)
             self.field_cls(null=True)
