@@ -1,6 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from threading import local
+# support for new style middleware django >= 1.10
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    MiddlewareMixin = object
 
 USER_ATTR_NAME = getattr(settings, 'LOCAL_USER_ATTR_NAME', '_current_user')
 
@@ -21,7 +26,7 @@ def _set_current_user(user=None):
     _do_set_current_user(lambda self: user)
 
 
-class ThreadLocalUserMiddleware(object):
+class ThreadLocalUserMiddleware(MiddlewareMixin):
     def process_request(self, request):
         # request.user closure; asserts laziness;
         # memorization is implemented in
