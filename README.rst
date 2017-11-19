@@ -67,7 +67,7 @@ Release Notes
 
   * provides middleware + methods to set + retrieve reference of currently logged in user from thread
   * provides CurrentUserField that by default stores the currently logged in user
-  * supports Django 1.10, 1.11 on python 2.7, 3.3, 3.4, 3.5, and 3.6 - as per the
+  * supports Django 1.10, 1.11 on python 2.7, 3.4, 3.5, and 3.6 - as per the
     `official django docs <https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django>`_
 
 
@@ -108,7 +108,7 @@ Setting up all Python versions
     sudo apt-get -y install software-properties-common
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
-    for version in 3.3 3.5 3.6; do
+    for version in 3.4 3.5 3.6; do
       py=python$version
       sudo apt-get -y install ${py} ${py}-dev
     done
