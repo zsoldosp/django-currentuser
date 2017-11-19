@@ -55,7 +55,8 @@ Release Notes
 -------------
 
 * 0.2.0 - New middleclass format
-  Support for new middleclass format of Django >1.10
+  - Adapt to new object based middle class format of Django 1.10+
+  - Drop support for deprecated Django versions 1.8 and 1.9
 
 * 0.1.1 - minor release
 
