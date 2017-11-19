@@ -29,7 +29,7 @@ DATABASES = {
     }
 }
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django_currentuser.middleware.ThreadLocalUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
