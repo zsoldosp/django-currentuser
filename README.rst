@@ -53,6 +53,7 @@ differences (as of django-cuser v.2017.3.16):
 
 Release Notes
 -------------
+* 0.2.2 - support Django 2.0
 * 0.2.1 - version fixes #9
    - support Django 1.11.x and not just 1.11.0
 * 0.2.0 - New middleclass format
