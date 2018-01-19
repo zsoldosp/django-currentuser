@@ -112,9 +112,18 @@ class CurrentUserFieldTestCase(TestCase):
 
     def test_is_a_nullable_fk_to_the_user_model(self):
         field = self.field_cls()
-        assert_that(field.rel.to, is_(equal_to(settings.AUTH_USER_MODEL)))
+        foreignkey_model = self.get_related_model(field)
+        assert_that(foreignkey_model, is_(equal_to(settings.AUTH_USER_MODEL)))
         assert_that(field.null, is_(True))
 
     def test_default_value_is_get_current_django_user(self):
         field = self.field_cls()
         assert_that(field.default, is_(get_current_authenticated_user))
+
+    def get_related_model(self, field):
+        if hasattr(field, 'remote_field'):
+            rel = getattr(field, 'remote_field', None)
+            return getattr(rel, 'model')
+        else:  # only for Django <= 1.8
+            rel = getattr(field, 'rel', None)
+            return getattr(rel, 'to')
