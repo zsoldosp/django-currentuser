@@ -107,7 +107,7 @@ class CurrentUserFieldTestCase(TestCase):
         with warnings.catch_warnings(record=True) as my_warnings:
             self.field_cls(default=get_current_authenticated_user)
             self.field_cls(null=True)
-            self.field_cls(to="auth.User")
+            self.field_cls(to=settings.AUTH_USER_MODEL)
             assert_that(my_warnings, has_length(0))
 
     def test_is_a_nullable_fk_to_the_user_model(self):

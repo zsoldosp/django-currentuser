@@ -1,5 +1,6 @@
 import warnings
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_currentuser.middleware import get_current_authenticated_user
@@ -12,7 +13,7 @@ class CurrentUserField(models.ForeignKey):
     description = _(
         'as default value sets the current logged in user if available')
     defaults = dict(null=True, default=get_current_authenticated_user,
-                    to="auth.User")
+                    to=settings.AUTH_USER_MODEL)
 
     def __init__(self, *args, **kwargs):
         self._warn_for_shadowing_args(*args, **kwargs)
