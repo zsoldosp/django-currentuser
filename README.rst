@@ -53,6 +53,11 @@ differences (as of django-cuser v.2017.3.16):
 
 Release Notes
 -------------
+* 0.3.0 - update supported versions according to
+  https://www.djangoproject.com/download/#supported-versions and
+  https://devguide.python.org/#status-of-python-branches
+  - drop support for Python 3.2
+
 * 0.2.3 - support custom user model, drop Django 1.10 support
 * 0.2.2 - support Django 2.0
 * 0.2.1 - version fixes #9
