@@ -35,6 +35,7 @@ class ToxToTravis:
 
     def setup_python(self):
         return [
+            'dist: xenial',
             'language: python',
             'before_install:',
             '  - sudo apt-get -qq update',
@@ -46,10 +47,10 @@ class ToxToTravis:
     def matrix(self):
         self.tox2travis_py = dict(
             py27='2.7',
-            py32='3.2',
             py34='3.4',
             py35='3.5',
             py36='3.6',
+            py37='3.7',
         )
         output = [
             'matrix:',
