@@ -57,7 +57,6 @@ Release Notes
   https://www.djangoproject.com/download/#supported-versions and
   https://devguide.python.org/#status-of-python-branches
   - drop support for Python 3.2
-  - add support for Python 3.7
 
 * 0.2.3 - support custom user model, drop Django 1.10 support
 * 0.2.2 - support Django 2.0
@@ -117,7 +116,7 @@ Setting up all Python versions
     sudo apt-get -y install software-properties-common
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
-    for version in 3.4 3.5 3.6 3.7; do
+    for version in 3.4 3.5 3.6; do
       py=python$version
       sudo apt-get -y install ${py} ${py}-dev
     done

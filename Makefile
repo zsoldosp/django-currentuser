@@ -47,7 +47,7 @@ coverage:
 	coverage html
 	open htmlcov/index.html
 
-docs: outfile=readme-errors
+docs: outfile=/tmp/readme-errors
 docs:
 	rst2html.py README.rst > /dev/null 2> ${outfile}
 	cat ${outfile}
