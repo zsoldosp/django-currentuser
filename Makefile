@@ -71,5 +71,4 @@ release: clean package docs tag
 	# https://packaging.python.org/distributing/
 	test -f ${whl}
 	echo "if the release fails, setup a ~/pypirc file as per https://docs.python.org/2/distutils/packageindex.html#pypirc"
-	twine register ${whl} -r ${PYPI_SERVER}
 	twine upload dist/* -r ${PYPI_SERVER}
