@@ -12,9 +12,7 @@ help:
 	@echo "test-all - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
-	@echo "tag - tag the current version and push it to ${GIT_REMOTE_NAME}"
-	@echo "release - package and upload a release"
-	@echo "sdist - package"
+	@echo "release - git tag the current version which creates a new pypi package with travis-ci's help"
 
 clean: clean-build clean-pyc clean-tox
 
@@ -53,22 +51,13 @@ docs:
 	cat ${outfile}
 	test 0 -eq `cat ${outfile} | wc -l`
 
-tag: TAG:=v${VERSION}
-tag: exit_code=$(shell git ls-remote ${GIT_REMOTE_NAME} | grep -q tags/${TAG}; echo $$?)
-tag:
+pre-deploy: clean docs
+
+release: TAG:=v${VERSION}
+release: exit_code=$(shell git ls-remote ${GIT_REMOTE_NAME} | grep -q tags/${TAG}; echo $$?)
+release:
 ifeq ($(exit_code),0)
 	@echo "Tag ${TAG} already present"
 else
 	git tag -a ${TAG} -m"${TAG}"; git push --tags ${GIT_REMOTE_NAME}
 endif
-
-package: clean
-	python setup.py sdist
-	python setup.py bdist_wheel
-
-release: whl=dist/django_currentuser-${VERSION}-py2.py3-none-any.whl
-release: clean package docs tag
-	# https://packaging.python.org/distributing/
-	test -f ${whl}
-	echo "if the release fails, setup a ~/pypirc file as per https://docs.python.org/2/distutils/packageindex.html#pypirc"
-	twine upload dist/* -r ${PYPI_SERVER}

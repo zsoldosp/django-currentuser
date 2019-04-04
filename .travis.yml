@@ -18,6 +18,7 @@ matrix:
 script:
   - tox -e $TOX_ENVS
 
+before_deploy: "make pre-deploy"
 deploy:
   provider: pypi
   user: "paessler_bis"
