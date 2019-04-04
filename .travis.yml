@@ -17,3 +17,9 @@ matrix:
       env: TOX_ENVS=py36-django111,py36-django20,py36-django21
 script:
   - tox -e $TOX_ENVS
+
+deploy:
+  provider: pypi
+  user: "paessler_bis"
+  password:
+    secure: "N+ark/iPL3Y8/ew9i3y0IQITVFRN6AQmUirG6YBIaNt5jw+N081qYuPtco7AwcbOWBiYz9JX6k6xfFcWGw0+bDUkpGZQkVgBdqAaQUj6kEzpyNU5vsyHY7jqBAYdkjReTXf7s+ZtNCIs/qLuhgipYIOEwCtv5cUkC5WMFa1/wIWKq7LwkS6TmrjbFxC0+fXna9xwa6hdUSkz3t0B8d81tEln5TbJovlViJObM1GqxQPrU8UUoGvdOWzaTdLLWB70Z1M70Gy+XwPba+Ce6tJsRzoKpELCEYuNyTPivPAbNmzqpUB+LzBNg90X7WPO2cfI1mlHBOOV1l8ogac/wEJvxQyNMg08z07JQUJfg6sbBsQMSc7EWj46owCnvvPZ6xQ+wkz3h+HEwYTxTFuoO/9/2LIpXvMqmO6n7WJ/jpBlJA/2ejWX1Eb8EXWBsNm6/8EVZLz5JSnFhyxZ6XxB83rsGGSGtQy4CR2JZisies8RqWNATF+6UGXd4ydPi9WXr4/BsPRMnObWAZrFUzzqgoLpkKQ/YTSqn55Id0PfL9veCWVwrWel5fvBB8Pkad3eG+VVhszgTzlcQyni8hZbI1StCpLIjGqWRxhp7F7fPBs+MBUKTX7P/wrCwAhn67i54rzvdc0Tk1BQuBVa7b6T+o1dO9xtMnz811Pj817bhF9oVvM="
