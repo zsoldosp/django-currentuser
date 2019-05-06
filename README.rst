@@ -53,6 +53,11 @@ differences (as of django-cuser v.2017.3.16):
 
 Release Notes
 -------------
+
+* 0.3.4 - Use public Travis for packaging to remove dependency on outdated build
+  system
+* 0.3.3 - drop Python 3.7 support due to build process problems
+* 0.3.1 - attempt to add Python 3.7 support
 * 0.3.0 - update supported versions according to
   https://www.djangoproject.com/download/#supported-versions and
   https://devguide.python.org/#status-of-python-branches
@@ -61,22 +66,17 @@ Release Notes
 * 0.2.3 - support custom user model, drop Django 1.10 support
 * 0.2.2 - support Django 2.0
 * 0.2.1 - version fixes #9
-   - support Django 1.11.x and not just 1.11.0
+  - support Django 1.11.x and not just 1.11.0
 * 0.2.0 - New middleclass format
   - Adapt to new object based middle class format of Django 1.10+
   - Drop support for deprecated Django versions 1.8 and 1.9
 
 * 0.1.1 - minor release
-
-  * suppress warning for passed kwargs as long as they match the defaults (avoids them being printed during running
-    tests when fields are cloned)
-
+  - suppress warning for passed kwargs as long as they match the defaults (avoids them being printed during running tests when fields are cloned)
 * 0.1.0 - initial release
-
-  * provides middleware + methods to set + retrieve reference of currently logged in user from thread
-  * provides CurrentUserField that by default stores the currently logged in user
-  * supports Django 1.10, 1.11 on python 2.7, 3.4, 3.5, and 3.6 - as per the
-    `official django docs <https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django>`_
+  - provides middleware + methods to set + retrieve reference of currently logged in user from thread
+  - provides CurrentUserField that by default stores the currently logged in user
+  - supports Django 1.10, 1.11 on python 2.7, 3.4, 3.5, and 3.6 - as per the `official django docs <https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django>`_
 
 
 .. contributing start
