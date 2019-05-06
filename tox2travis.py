@@ -49,6 +49,7 @@ class ToxToTravis:
             py27='2.7',
             py35='3.5',
             py36='3.6',
+            py37='3.7',
         )
         output = [
             'matrix:',

@@ -57,6 +57,7 @@ Release Notes
 * 0.3.5 - update supported versions
   - drop support for Python 3.4
   - drop support for Django 2.0
+  - add support for Python 3.7
   - update tox3travis.py to not loose deployment feature
 * 0.3.4 - Use public Travis for packaging to remove dependency on outdated build
   system
@@ -120,7 +121,7 @@ Setting up all Python versions
     sudo apt-get -y install software-properties-common
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
-    for version in 3.5 3.6; do
+    for version in 3.5 3.6 3.7; do
       py=python$version
       sudo apt-get -y install ${py} ${py}-dev
     done
