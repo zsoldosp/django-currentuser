@@ -54,6 +54,8 @@ differences (as of django-cuser v.2017.3.16):
 Release Notes
 -------------
 
+* 0.3.5
+  - update tox3travis.py to not loose deployment feature
 * 0.3.4 - Use public Travis for packaging to remove dependency on outdated build
   system
 * 0.3.3 - drop Python 3.7 support due to build process problems
