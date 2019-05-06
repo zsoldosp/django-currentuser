@@ -58,6 +58,7 @@ Release Notes
   - drop support for Python 3.4
   - drop support for Django 2.0
   - add support for Python 3.7
+  - add support for Django 2.2
   - update tox3travis.py to not loose deployment feature
 * 0.3.4 - Use public Travis for packaging to remove dependency on outdated build
   system
