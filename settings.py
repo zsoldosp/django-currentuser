@@ -33,6 +33,7 @@ MIDDLEWARE = (
     'django_currentuser.middleware.ThreadLocalUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 # Make this unique, and don't share it with anybody.
