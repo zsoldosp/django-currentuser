@@ -54,12 +54,13 @@ differences (as of django-cuser v.2017.3.16):
 Release Notes
 -------------
 
-* 0.3.5 - update supported versions
+* 0.4.0 - update supported versions
   - drop support for Python 3.4
   - drop support for Django 2.0
   - add support for Python 3.7
   - add support for Django 2.2
   - update tox3travis.py to not loose deployment feature
+
 * 0.3.4 - Use public Travis for packaging to remove dependency on outdated build
   system
 * 0.3.3 - drop Python 3.7 support due to build process problems
