@@ -17,7 +17,7 @@ matrix:
       env: TOX_ENVS=py37-django111,py37-django21,py37-django22
 script:
   - tox -e $TOX_ENVS
-before_deploy: "make pre-deploy"
+before_deploy: "make clean"
 deploy:
   provider: pypi
   user: "paessler_bis"

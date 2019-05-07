@@ -115,6 +115,9 @@ Pull Requests
   * the latest ``flake8`` will be run and shouldn't produce any warning
   * if the change is significant enough, documentation has to be provided
 
+To trigger the packaging, run `make release` on the master branch with a changed
+version number.
+
 Setting up all Python versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

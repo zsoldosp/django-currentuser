@@ -52,8 +52,6 @@ docs:
 	cat ${outfile}
 	test 0 -eq `cat ${outfile} | wc -l`
 
-pre-deploy: clean docs
-
 release: TAG:=v${VERSION}
 release: exit_code=$(shell git ls-remote ${GIT_REMOTE_NAME} | grep -q tags/${TAG}; echo $$?)
 release:
