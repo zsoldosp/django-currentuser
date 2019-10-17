@@ -13,22 +13,30 @@ from django_currentuser.middleware import (
 from django_currentuser.db.models import CurrentUserField
 
 from .sixmock import patch
+from .models import TestModelOnUpdate, TestModelDefaultBehavior
 
 
-class TestSetUserToThread(TestCase):
-
+class TestUserBase(TestCase):
     def tearDown(self):
-        super(TestSetUserToThread, self).tearDown()
+        super(TestUserBase, self).tearDown()
         _set_current_user(None)
 
     def setUp(self):
-        super(TestSetUserToThread, self).setUp()
+        super(TestUserBase, self).setUp()
         self.user1 = User.objects.create(username="user1", is_staff=True)
         self.user1.set_password("pw1")
         self.user1.save()
         self.user2 = User.objects.create(username="user2", is_staff=True)
         self.user2.set_password("pw2")
         self.user2.save()
+
+    def login_and_go_to_homepage(self, username, password):
+        data = {"username": username, "password": password}
+        self.client.post(reverse("login"), follow=True, data=data)
+        self.client.get('/')
+
+
+class TestSetUserToThread(TestUserBase):
 
     def test__local_thread_var_is_set_to_logged_in_user(self):
         _set_current_user(None)
@@ -45,11 +53,6 @@ class TestSetUserToThread(TestCase):
         self.client.get("/")
         current_user = get_current_user()
         assert_that(current_user, instance_of(AnonymousUser))
-
-    def login_and_go_to_homepage(self, username, password):
-        data = {"username": username, "password": password}
-        self.client.post(reverse("login"), follow=True, data=data)
-        self.client.get('/')
 
 
 class GetCurrentPersistedUserTestCase(TestCase):
@@ -127,3 +130,59 @@ class CurrentUserFieldTestCase(TestCase):
         else:  # only for Django <= 1.8
             rel = getattr(field, 'rel', None)
             return getattr(rel, 'to')
+
+
+class CurrentUserFieldOnUpdateTestCase(TestUserBase):
+
+    def test_on_update_enabled(self):
+        _set_current_user(None)
+        test_model = TestModelOnUpdate()
+        test_model.save()
+
+        self.assertIs(test_model.updated_by_id, None)
+        test_model.refresh_from_db()
+        self.assertIs(test_model.updated_by, None)
+
+        self.login_and_go_to_homepage(username="user1", password="pw1")
+        test_model.save()
+
+        self.assertEqual(self.user1.pk, test_model.updated_by_id)
+        test_model.refresh_from_db()
+        self.assertEqual(self.user1, test_model.updated_by)
+
+        self.login_and_go_to_homepage(username="user2", password="pw2")
+        test_model.save()
+
+        self.assertEqual(self.user2.pk, test_model.updated_by_id)
+        test_model.refresh_from_db()
+        self.assertEqual(self.user2, test_model.updated_by)
+
+        _set_current_user(None)
+        test_model.save()
+
+        self.assertIs(test_model.updated_by_id, None)
+        test_model.refresh_from_db()
+        self.assertIs(test_model.updated_by, None)
+
+    def test_on_update_disabled(self):
+        self.login_and_go_to_homepage(username="user1", password="pw1")
+        test_model = TestModelDefaultBehavior()
+        test_model.save()
+
+        self.assertEqual(self.user1.pk, test_model.created_by_id)
+        test_model.refresh_from_db()
+        self.assertEqual(self.user1, test_model.created_by)
+
+        self.login_and_go_to_homepage(username="user2", password="pw2")
+        test_model.save()
+
+        self.assertEqual(self.user1.pk, test_model.created_by_id)
+        test_model.refresh_from_db()
+        self.assertEqual(self.user1, test_model.created_by)
+
+        _set_current_user(None)
+        test_model.save()
+
+        self.assertEqual(self.user1.pk, test_model.created_by_id)
+        test_model.refresh_from_db()
+        self.assertEqual(self.user1, test_model.created_by)
