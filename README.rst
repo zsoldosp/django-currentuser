@@ -53,6 +53,8 @@ differences (as of django-cuser v.2017.3.16):
 
 Release Notes
 -------------
+* 0.4.3 - Removed Django version limit
+
 * 0.4.2 - Minor fix for supported Django and Python versions
 
 * 0.4.0 - update supported versions
