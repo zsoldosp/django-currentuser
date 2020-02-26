@@ -53,6 +53,10 @@ differences (as of django-cuser v.2017.3.16):
 
 Release Notes
 -------------
+* 0.5.0
+  - add support for update on save (thank you @felubra)
+  - no longer build on Python 3.5, deprecated
+
 * 0.4.3 - add support for Django 3.0
 
 * 0.4.2 - Minor fix for supported Django and Python versions
@@ -129,7 +133,7 @@ Setting up all Python versions
     sudo apt-get -y install software-properties-common
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
-    for version in 3.5 3.6 3.7; do
+    for version in 3.6 3.7; do
       py=python$version
       sudo apt-get -y install ${py} ${py}-dev
     done
