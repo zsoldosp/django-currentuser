@@ -53,6 +53,8 @@ differences (as of django-cuser v.2017.3.16):
 
 Release Notes
 -------------
+* 0.5.1 - add support for Django 3.1 and Python 3.8
+
 * 0.5.0
   - add support for update on save (thank you @felubra)
   - no longer build on Python 3.5, deprecated
