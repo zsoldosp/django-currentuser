@@ -34,6 +34,7 @@ Then use it in a project::
     from django_currentuser.db.models import CurrentUserField
     class Foo(models.Model):
         created_by = CurrentUserField()
+        updated_by = CurrentUserField(on_update=True)
 
 
 Differences to django-cuser
