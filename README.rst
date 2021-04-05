@@ -54,6 +54,8 @@ differences (as of django-cuser v.2017.3.16):
 
 Release Notes
 -------------
+* 0.5.3 - add support for Django 3.2 and Python 3.9
+
 * 0.5.2 - Fixed Django deprecation warning about using `ugettext_lazy()`
 
 * 0.5.1 - add support for Django 3.1 and Python 3.8
