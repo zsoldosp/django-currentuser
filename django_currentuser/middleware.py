@@ -32,6 +32,7 @@ class ThreadLocalUserMiddleware(object):
         # request.user (non-data descriptor)
         _do_set_current_user(lambda self: getattr(request, 'user', None))
         response = self.get_response(request)
+        _do_set_current_user(lambda self: None)
         return response
 
 
