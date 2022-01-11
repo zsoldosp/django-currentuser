@@ -17,6 +17,14 @@ class CurrentUserField(models.ForeignKey):
 
     def __init__(self, *args, **kwargs):
         self.on_update = kwargs.pop("on_update", False)
+
+        # If `to` is present in kwargs, and the same when ignoring case then
+        # update `to` to use the defaults.
+        # Fix for https://github.com/PaesslerAG/django-currentuser/issues/43
+        if "to" in kwargs \
+                and kwargs["to"].lower() == self.defaults['to'].lower():
+            kwargs["to"] = self.defaults['to']
+
         self._warn_for_shadowing_args(*args, **kwargs)
 
         if "on_delete" not in kwargs:
