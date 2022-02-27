@@ -35,6 +35,11 @@ class TestUserBase(TestCase):
         self.client.post(reverse("login"), follow=True, data=data)
         self.client.post(reverse("create"), follow=True, data=data)
 
+    def login_and_update(self, username, password, pk):
+        data = {"username": username, "password": password}
+        self.client.post(reverse("login"), follow=True, data=data)
+        self.client.patch(reverse("update", args=[pk]), follow=True, data=data)
+
 
 class TestSetUserToThread(TestUserBase):
 
@@ -140,28 +145,25 @@ class CurrentUserFieldOnUpdateTestCase(TestUserBase):
         test_model.save()
 
         self.assertIs(test_model.updated_by_id, None)
-        test_model.refresh_from_db()
         self.assertIs(test_model.updated_by, None)
 
-        self.login_and_go_to_homepage(username="user1", password="pw1")
-        test_model.save()
+        self.login_and_update(username="user1", password="pw1", pk=1)
+        user = TestModelOnUpdate.objects.get(pk=1)
 
-        self.assertEqual(self.user1.pk, test_model.updated_by_id)
-        test_model.refresh_from_db()
-        self.assertEqual(self.user1, test_model.updated_by)
+        self.assertEqual(self.user1.pk, user.updated_by_id)
+        self.assertEqual(self.user1, user.updated_by)
 
-        self.login_and_go_to_homepage(username="user2", password="pw2")
-        test_model.save()
+        self.login_and_update(username="user2", password="pw2", pk=1)
+        user = TestModelOnUpdate.objects.get(pk=1)
 
-        self.assertEqual(self.user2.pk, test_model.updated_by_id)
-        test_model.refresh_from_db()
-        self.assertEqual(self.user2, test_model.updated_by)
+        self.assertEqual(self.user2.pk, user.updated_by_id)
+        self.assertEqual(self.user2, user.updated_by)
 
         _set_current_user(None)
         test_model.save()
+        user = TestModelOnUpdate.objects.get(pk=1)
 
         self.assertIs(test_model.updated_by_id, None)
-        test_model.refresh_from_db()
         self.assertIs(test_model.updated_by, None)
 
     def test_on_update_disabled(self):
