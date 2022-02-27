@@ -9,7 +9,11 @@ from django.test.testcases import TestCase
 from hamcrest import assert_that, instance_of, equal_to, is_, empty, has_length
 
 from django_currentuser.middleware import (
-    get_current_user, _set_current_user, get_current_authenticated_user)
+    SetCurrentUser,
+    get_current_user,
+    _set_current_user,
+    get_current_authenticated_user
+)
 from django_currentuser.db.models import CurrentUserField
 
 from .sixmock import patch
@@ -43,15 +47,16 @@ class TestUserBase(TestCase):
 
 class TestSetUserToThread(TestUserBase):
 
+    @patch.object(SetCurrentUser, "__exit__", lambda *args, **kwargs: None)
     def test__local_thread_var_is_set_to_logged_in_user(self):
         _set_current_user(None)
         self.assertIsNone(get_current_user())
 
-        self.login_and_go_to_homepage(username="user1", password="pw1")
+        self.login_and_create(username="user1", password="pw1")
         self.assertEqual(self.user1, get_current_user())
         self.client.logout()
 
-        self.login_and_go_to_homepage(username="user2", password="pw2")
+        self.login_and_create(username="user2", password="pw2")
         self.assertEqual(self.user2, get_current_user())
         self.client.logout()
 
