@@ -21,6 +21,17 @@ def _set_current_user(user=None):
     _do_set_current_user(lambda self: user)
 
 
+class SetCurrentUser:
+    def __init__(this, request):
+        this.request = request
+
+    def __enter__(this):
+        _do_set_current_user(lambda self: getattr(this.request, 'user', None))
+
+    def __exit__(this, type, value, traceback):
+        _do_set_current_user(lambda self: None)
+
+
 class ThreadLocalUserMiddleware(object):
 
     def __init__(self, get_response):
@@ -30,8 +41,8 @@ class ThreadLocalUserMiddleware(object):
         # request.user closure; asserts laziness;
         # memorization is implemented in
         # request.user (non-data descriptor)
-        _do_set_current_user(lambda self: getattr(request, 'user', None))
-        response = self.get_response(request)
+        with SetCurrentUser(request):
+            response = self.get_response(request)
         return response
 
 
