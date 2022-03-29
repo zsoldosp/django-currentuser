@@ -33,7 +33,7 @@ class CurrentUserField(models.ForeignKey):
         if self.on_update:
             kwargs["editable"] = False
             kwargs["blank"] = True
-                    
+
         kwargs.update(self.defaults)
         super(CurrentUserField, self).__init__(**kwargs)
 
