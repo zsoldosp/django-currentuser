@@ -9,7 +9,11 @@ from django.test.testcases import TestCase
 from hamcrest import assert_that, instance_of, equal_to, is_, empty, has_length
 
 from django_currentuser.middleware import (
-    get_current_user, _set_current_user, get_current_authenticated_user)
+    SetCurrentUser,
+    get_current_user,
+    _set_current_user,
+    get_current_authenticated_user
+)
 from django_currentuser.db.models import CurrentUserField
 
 from .sixmock import patch
@@ -30,23 +34,29 @@ class TestUserBase(TestCase):
         self.user2.set_password("pw2")
         self.user2.save()
 
-    def login_and_go_to_homepage(self, username, password):
+    def login_and_create(self, username, password):
         data = {"username": username, "password": password}
         self.client.post(reverse("login"), follow=True, data=data)
-        self.client.get('/')
+        self.client.post(reverse("create"), follow=True, data=data)
+
+    def login_and_update(self, username, password, pk):
+        data = {"username": username, "password": password}
+        self.client.post(reverse("login"), follow=True, data=data)
+        self.client.patch(reverse("update", args=[pk]), follow=True, data=data)
 
 
 class TestSetUserToThread(TestUserBase):
 
+    @patch.object(SetCurrentUser, "__exit__", lambda *args, **kwargs: None)
     def test__local_thread_var_is_set_to_logged_in_user(self):
         _set_current_user(None)
         self.assertIsNone(get_current_user())
 
-        self.login_and_go_to_homepage(username="user1", password="pw1")
+        self.login_and_create(username="user1", password="pw1")
         self.assertEqual(self.user1, get_current_user())
         self.client.logout()
 
-        self.login_and_go_to_homepage(username="user2", password="pw2")
+        self.login_and_create(username="user2", password="pw2")
         self.assertEqual(self.user2, get_current_user())
         self.client.logout()
 
@@ -106,6 +116,16 @@ class CurrentUserFieldTestCase(TestCase):
             assert_that([str(m.message) for m in my_warnings],
                         is_([CurrentUserField.warning] * 4))
 
+    def test_no_warning_raised_when_upper_case_user_model_passed(self):
+        with warnings.catch_warnings(record=True) as my_warnings:
+            self.field_cls(to='auth.User')
+            assert_that(my_warnings, has_length(0))
+
+    def test_no_warning_raised_when_lower_case_user_model_passed(self):
+        with warnings.catch_warnings(record=True) as my_warnings:
+            self.field_cls(to='auth.user')
+            assert_that(my_warnings, has_length(0))
+
     def test_no_warning_raised_if_passed_argument_values_match_defaults(self):
         with warnings.catch_warnings(record=True) as my_warnings:
             self.field_cls(default=get_current_authenticated_user)
@@ -140,49 +160,49 @@ class CurrentUserFieldOnUpdateTestCase(TestUserBase):
         test_model.save()
 
         self.assertIs(test_model.updated_by_id, None)
-        test_model.refresh_from_db()
         self.assertIs(test_model.updated_by, None)
 
-        self.login_and_go_to_homepage(username="user1", password="pw1")
-        test_model.save()
+        self.login_and_update(username="user1", password="pw1", pk=1)
+        user = TestModelOnUpdate.objects.get(pk=1)
 
-        self.assertEqual(self.user1.pk, test_model.updated_by_id)
-        test_model.refresh_from_db()
-        self.assertEqual(self.user1, test_model.updated_by)
+        self.assertEqual(self.user1.pk, user.updated_by_id)
+        self.assertEqual(self.user1, user.updated_by)
 
-        self.login_and_go_to_homepage(username="user2", password="pw2")
-        test_model.save()
+        self.login_and_update(username="user2", password="pw2", pk=1)
+        user = TestModelOnUpdate.objects.get(pk=1)
 
-        self.assertEqual(self.user2.pk, test_model.updated_by_id)
-        test_model.refresh_from_db()
-        self.assertEqual(self.user2, test_model.updated_by)
+        self.assertEqual(self.user2.pk, user.updated_by_id)
+        self.assertEqual(self.user2, user.updated_by)
 
         _set_current_user(None)
         test_model.save()
+        user = TestModelOnUpdate.objects.get(pk=1)
 
         self.assertIs(test_model.updated_by_id, None)
-        test_model.refresh_from_db()
         self.assertIs(test_model.updated_by, None)
 
     def test_on_update_disabled(self):
-        self.login_and_go_to_homepage(username="user1", password="pw1")
-        test_model = TestModelDefaultBehavior()
-        test_model.save()
+        self.login_and_create(username="user1", password="pw1")
+        user1 = TestModelDefaultBehavior.objects.get(pk=1)
 
-        self.assertEqual(self.user1.pk, test_model.created_by_id)
-        test_model.refresh_from_db()
-        self.assertEqual(self.user1, test_model.created_by)
+        self.assertEqual(self.user1.pk, user1.created_by_id)
+        self.assertEqual(self.user1, user1.created_by)
 
-        self.login_and_go_to_homepage(username="user2", password="pw2")
-        test_model.save()
+        self.login_and_create(username="user2", password="pw2")
+        user1 = TestModelDefaultBehavior.objects.get(pk=1)
+        user2 = TestModelDefaultBehavior.objects.get(pk=2)
 
-        self.assertEqual(self.user1.pk, test_model.created_by_id)
-        test_model.refresh_from_db()
-        self.assertEqual(self.user1, test_model.created_by)
+        self.assertEqual(self.user1.pk, user1.created_by_id)
+        self.assertEqual(self.user1, user1.created_by)
+        self.assertEqual(self.user2.pk, user2.created_by_id)
+        self.assertEqual(self.user2, user2.created_by)
 
         _set_current_user(None)
-        test_model.save()
+        TestModelDefaultBehavior().save()
+        user1 = TestModelDefaultBehavior.objects.get(pk=1)
+        user2 = TestModelDefaultBehavior.objects.get(pk=2)
 
-        self.assertEqual(self.user1.pk, test_model.created_by_id)
-        test_model.refresh_from_db()
-        self.assertEqual(self.user1, test_model.created_by)
+        self.assertEqual(self.user1.pk, user1.created_by_id)
+        self.assertEqual(self.user1, user1.created_by)
+        self.assertEqual(self.user2.pk, user2.created_by_id)
+        self.assertEqual(self.user2, user2.created_by)
