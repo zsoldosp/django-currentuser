@@ -2,6 +2,9 @@
 django-currentuser
 =============================
 
+:WARNING:
+       This project is currently frozen and will not longer be maintained. If there is someone interested in continuing to maintain this project please contact: security@paessler.com . 
+
 .. image:: https://travis-ci.org/PaesslerAG/django-currentuser.svg?branch=master
         :target: https://travis-ci.org/PaesslerAG/django-currentuser
 
