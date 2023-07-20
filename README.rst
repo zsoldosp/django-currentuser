@@ -65,8 +65,9 @@ Supported Versions
 Release Notes
 -------------
 * 0.6.0
-  * add support for Django 4.0 and Python
-  * drop support for Python 3.6 and 3.7 ()
+  * add support for Django 4.0, 4.1, and 4.2
+  * add support for Python 3.11
+  * drop support for Python 3.6 and 3.7
 * 0.5.3 - add support for Django 3.2 and Python 3.9
 
 * 0.5.2 - Fixed Django deprecation warning about using `ugettext_lazy()`
