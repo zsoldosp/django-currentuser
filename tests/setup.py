@@ -18,9 +18,6 @@ setup(
     version='0.0.0',
     description=readme,
     long_description=readme,
-    author='Paessler AG',
-    author_email='bis@paessler.com',
-    url='https://github.com/PaesslerAG/django-currentuser',
     packages=[
         'testapp',
     ],

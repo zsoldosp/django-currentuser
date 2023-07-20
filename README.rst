@@ -120,13 +120,13 @@ Contributing
 
 As an open source project, we welcome contributions.
 
-The code lives on `github <https://github.com/PaesslerAG/django-currentuser>`_.
+The code lives on `github <https://github.com/zsoldosp/django-currentuser>`_.
 
 Reporting issues/improvements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please open an `issue on github <https://github.com/PaesslerAG/django-currentuser/issues/>`_
-or provide a `pull request <https://github.com/PaesslerAG/django-currentuser/pulls/>`_
+Please open an `issue on github <https://github.com/zsoldosp/django-currentuser/issues/>`_
+or provide a `pull request <https://github.com/zsoldosp/django-currentuser/pulls/>`_
 whether for code or for the documentation.
 
 For non-trivial changes, we kindly ask you to open an issue, as it might be rejected.
@@ -163,11 +163,18 @@ Code of Conduct
 
 As it is a Django extension, it follows
 `Django's own Code of Conduct <https://www.djangoproject.com/conduct/>`_.
-As there is no mailing list yet, please just email one of the main authors
-(see ``setup.py`` file or `github contributors`_)
+As there is no mailing list yet, please use `github issues`_
+
+Contributors
+~~~~~~~~~~~~
+Current maintainer: @zsoldosp
+Initial development & maintenance: @PaesslerAG
+
+For contributors, see `github contributors`_.
 
 
 .. contributing end
 
 
-.. _github contributors: https://github.com/PaesslerAG/django-currentuser/graphs/contributors
+.. _github contributors: https://github.com/zsoldosp/django-currentuser/graphs/contributors
+.. _github issues: https://github.com/zsoldosp/django-currentuser/issues

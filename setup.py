@@ -23,9 +23,9 @@ setup(
     version=version,
     description=description,
     long_description=readme,
-    author='Paessler AG',
-    author_email='bis@paessler.com',
-    url='https://github.com/PaesslerAG/django-currentuser',
+    author='Peter Zsoldos',
+    author_email='hello@zsoldosp.eu',
+    url='https://github.com/zsoldosp/django-currentuser',
     packages=[
         'django_currentuser',
     ],
