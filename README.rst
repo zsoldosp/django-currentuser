@@ -55,8 +55,18 @@ differences (as of django-cuser v.2017.3.16):
 - django-cuser deletes the user reference from the thread after finishing a
   response and it will therefore no longer be available for testing purposes.
 
+Supported Versions
+------------------
+* for `django-currentuser`, fixes are always made against the latest version
+* for `Python`, support is guided by https://devguide.python.org/versions/#supported-versions
+* for `Django`, support is guided by https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django
+  (assuming the Python version listed there is supported)
+
 Release Notes
 -------------
+* 0.6.0
+  * add support for Django 4.0 and Python
+  * drop support for Python 3.6 and 3.7 ()
 * 0.5.3 - add support for Django 3.2 and Python 3.9
 
 * 0.5.2 - Fixed Django deprecation warning about using `ugettext_lazy()`
@@ -143,7 +153,7 @@ Setting up all Python versions
     sudo apt-get -y install software-properties-common
     sudo add-apt-repository ppa:fkrull/deadsnakes
     sudo apt-get update
-    for version in 3.6 3.7; do
+    for version in 3.8 3.9 3.10 3.11; do
       py=python$version
       sudo apt-get -y install ${py} ${py}-dev
     done
