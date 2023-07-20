@@ -66,9 +66,11 @@ Supported Versions
 Release Notes
 -------------
 * 0.6.0
+
   * add support for Django 4.0, 4.1, and 4.2
   * add support for Python 3.11
   * drop support for Python 3.6 and 3.7
+
 * 0.5.3 - add support for Django 3.2 and Python 3.9
 
 * 0.5.2 - Fixed Django deprecation warning about using `ugettext_lazy()`
@@ -84,6 +86,7 @@ Release Notes
 * 0.4.2 - Minor fix for supported Django and Python versions
 
 * 0.4.0 - update supported versions
+
   - drop support for Python 3.4
   - drop support for Django 2.0
   - add support for Python 3.7
@@ -97,19 +100,26 @@ Release Notes
 * 0.3.0 - update supported versions according to
   https://www.djangoproject.com/download/#supported-versions and
   https://devguide.python.org/#status-of-python-branches
+
   - drop support for Python 3.2
 
 * 0.2.3 - support custom user model, drop Django 1.10 support
 * 0.2.2 - support Django 2.0
 * 0.2.1 - version fixes #9
+
   - support Django 1.11.x and not just 1.11.0
+
 * 0.2.0 - New middleclass format
+
   - Adapt to new object based middle class format of Django 1.10+
   - Drop support for deprecated Django versions 1.8 and 1.9
 
 * 0.1.1 - minor release
+
   - suppress warning for passed kwargs as long as they match the defaults (avoids them being printed during running tests when fields are cloned)
+
 * 0.1.0 - initial release
+
   - provides middleware + methods to set + retrieve reference of currently logged in user from thread
   - provides CurrentUserField that by default stores the currently logged in user
   - supports Django 1.10, 1.11 on python 2.7, 3.4, 3.5, and 3.6 - as per the `official django docs <https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django>`_
