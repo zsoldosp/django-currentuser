@@ -5,9 +5,6 @@ django-currentuser
 :WARNING:
        The transfer of this project is currently underway. Once that is completed, a release will be made. See https://github.com/zsoldosp/django-currentuser/issues/68
 
-.. image:: https://travis-ci.org/PaesslerAG/django-currentuser.svg?branch=master
-        :target: https://travis-ci.org/PaesslerAG/django-currentuser
-
 ----
 
 .. contents:: Conveniently store reference to request user on thread/db level.
