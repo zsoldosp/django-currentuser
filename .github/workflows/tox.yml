@@ -1,4 +1,4 @@
-name: Django CI
+name: Tox
 
 on:
   push:
