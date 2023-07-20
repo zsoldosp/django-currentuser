@@ -3,7 +3,9 @@ django-currentuser
 =============================
 
 :WARNING:
-       The transfer of this project is currently underway. Once that is completed, a release will be made. See https://github.com/zsoldosp/django-currentuser/issues/68
+       The transfer of this project is currently underway. Once that is completed,
+       a release will be made. See https://github.com/zsoldosp/django-currentuser/issues/68
+       and https://github.com/zsoldosp/django-currentuser/pull/70
 
 ----
 
