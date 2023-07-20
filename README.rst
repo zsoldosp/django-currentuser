@@ -54,9 +54,9 @@ differences (as of django-cuser v.2017.3.16):
 
 Supported Versions
 ------------------
-* for `django-currentuser`, fixes are always made against the latest version
-* for `Python`, support is guided by https://devguide.python.org/versions/#supported-versions
-* for `Django`, support is guided by
+* for django-currentuser`, fixes are always made against the latest version
+* for Python, support is guided by https://devguide.python.org/versions/#supported-versions
+* for Django, support is guided by
   https://docs.djangoproject.com/en/dev/faq/install/#what-python-version-can-i-use-with-django
   and https://www.djangoproject.com/download/#supported-versions (assuming the Python version
   listed there is supported)
