@@ -83,9 +83,13 @@ ${PACKAGE_FILE_WHL}: django_currentuser/ pyproject.toml Makefile setup.py setup.
 
 package: build-deps clean-build clean-python ${PACKAGE_FILE} ${PACKAGE_FILE_WHL}
 
+
 release:  package
-	echo "if the release fails, setup a ~/pypirc file as per https://packaging.python.org/en/latest/tutorials/packaging-projects/"
+ifeq ($(TWINE_PASSWORD),)
+	echo TWINE_PASSWORD empty
 	echo "USE env vars TEST_TWINE_PASSWORD/CURRENTUSER_TWINE_PASSWORD env vars before invoking make"
-	if [ -z $${TWINE_PASSWORD+x} ]; then echo "must set TWINE_PASSWORD"; false; fi
+	false
+endif
+	echo "if the release fails, setup a ~/pypirc file as per https://packaging.python.org/en/latest/tutorials/packaging-projects/"
 	# env | grep TWINE
 	TWINE_PASSWORD=${TWINE_PASSWORD} python3 -m twine upload --repository ${PYPI_SERVER} dist/* --verbose
