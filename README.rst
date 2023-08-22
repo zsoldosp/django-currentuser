@@ -2,11 +2,6 @@
 django-currentuser
 =============================
 
-:WARNING:
-       The transfer of this project is currently underway. Once that is completed,
-       a release will be made. See https://github.com/zsoldosp/django-currentuser/issues/68
-       and https://github.com/zsoldosp/django-currentuser/pull/70
-
 ----
 
 .. contents:: Conveniently store reference to request user on thread/db level.
@@ -65,6 +60,8 @@ Supported Versions
 
 Release Notes
 -------------
+* 0.6.1
+  * remove project transfer warning from README in order not to scare people away from the project
 * 0.6.0
 
   * add support for Django 4.0, 4.1, and 4.2
