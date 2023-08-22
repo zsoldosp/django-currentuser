@@ -90,6 +90,7 @@ ifeq ($(TWINE_PASSWORD),)
 	echo "USE env vars TEST_TWINE_PASSWORD/CURRENTUSER_TWINE_PASSWORD env vars before invoking make"
 	false
 endif
+	twine check dist/*
 	echo "if the release fails, setup a ~/pypirc file as per https://packaging.python.org/en/latest/tutorials/packaging-projects/"
 	# env | grep TWINE
 	TWINE_PASSWORD=${TWINE_PASSWORD} python3 -m twine upload --repository ${PYPI_SERVER} dist/* --verbose

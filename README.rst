@@ -2,11 +2,7 @@
 django-currentuser
 =============================
 
-----
-
 .. contents:: Conveniently store reference to request user on thread/db level.
-
-----
 
 Quickstart
 ----------
