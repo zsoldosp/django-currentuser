@@ -60,8 +60,11 @@ Supported Versions
 
 Release Notes
 -------------
+
 * 0.6.1
+
   * remove project transfer warning from README in order not to scare people away from the project
+
 * 0.6.0
 
   * add support for Django 4.0, 4.1, and 4.2
