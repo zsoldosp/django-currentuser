@@ -1,8 +1,17 @@
 .PHONY: clean-python clean-build docs clean-tox
-PYPI_SERVER?=pypi
+#PYPI_SERVER?=pypi
+PYPI_SERVER?=testpypi
+ifeq ($(PYPI_SERVER),testpypi)
+	TWINE_PASSWORD=${TEST_TWINE_PASSWORD}
+else
+	TWINE_PASSWORD=${CURRENTUSER_TWINE_PASSWORD}
+endif
+RELEASE_PYTHON=python3.8
 GIT_REMOTE_NAME?=origin
 SHELL=/bin/bash
-VERSION=$(shell python -c"import django_currentuser as m; print(m.__version__)")
+VERSION=$(shell python3 -c"import django_currentuser as m; print(m.__version__)")
+PACKAGE_FILE_TGZ=dist/django_currentuser-${VERSION}.tar.gz
+PACKAGE_FILE_WHL=dist/django_currentuser-${VERSION}-py3-none-any.whl
 
 help:
 	@echo "clean-build - remove build artifacts"
@@ -13,7 +22,9 @@ help:
 	@echo "test-all - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
-	@echo "release - git tag the current version which creates a new pypi package with travis-ci's help"
+	@echo "tag - git tag the current version which creates a new pypi package with travis-ci's help"
+	@echo "package- build the sdist/wheel"
+	@echo "release- package, tag, and publush"
 
 clean: clean-build clean-python clean-tox
 
@@ -52,11 +63,34 @@ docs:
 	cat ${outfile}
 	test 0 -eq `cat ${outfile} | wc -l`
 
-release: TAG:=v${VERSION}
-release: exit_code=$(shell git ls-remote ${GIT_REMOTE_NAME} | grep -q tags/${TAG}; echo $$?)
-release:
+tag: TAG:=v${VERSION}
+tag: exit_code=$(shell git ls-remote ${GIT_REMOTE_NAME} | grep -q tags/${TAG}; echo $$?)
+tag:
 ifeq ($(exit_code),0)
 	@echo "Tag ${TAG} already present"
 else
-	git tag -a ${TAG} -m"${TAG}"; git push --tags ${GIT_REMOTE_NAME}
+	@echo "git tag -a ${TAG} -m"${TAG}"; git push --tags ${GIT_REMOTE_NAME}"
 endif
+
+build-deps: 
+	${RELEASE_PYTHON} -m pip install --upgrade build
+	${RELEASE_PYTHON} -m pip install --upgrade twine
+
+
+${PACKAGE_FILE_TGZ}: django_currentuser/ pyproject.toml Makefile setup.py setup.cfg
+${PACKAGE_FILE_WHL}: django_currentuser/ pyproject.toml Makefile setup.py setup.cfg
+	${RELEASE_PYTHON} -m build
+
+package: build-deps clean-build clean-python ${PACKAGE_FILE} ${PACKAGE_FILE_WHL}
+
+
+release:  package
+ifeq ($(TWINE_PASSWORD),)
+	echo TWINE_PASSWORD empty
+	echo "USE env vars TEST_TWINE_PASSWORD/CURRENTUSER_TWINE_PASSWORD env vars before invoking make"
+	false
+endif
+	twine check dist/*
+	echo "if the release fails, setup a ~/pypirc file as per https://packaging.python.org/en/latest/tutorials/packaging-projects/"
+	# env | grep TWINE
+	TWINE_PASSWORD=${TWINE_PASSWORD} python3 -m twine upload --repository ${PYPI_SERVER} dist/* --verbose
