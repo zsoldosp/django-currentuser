@@ -4,8 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-currentuser"
-version = "0.6.1"
+version = "0.7.0"
 authors = [
+  { name="Peter Zsoldos", email="hello@zsoldosp.eu" },
+]
+maintainers = [
   { name="Peter Zsoldos", email="hello@zsoldosp.eu" },
 ]
 description = "Conveniently store reference to request user on thread/db level."
@@ -21,15 +24,22 @@ classifiers = [
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Framework :: Django',
         'Framework :: Django :: 3.2',
-        'Framework :: Django :: 4',
-        'Framework :: Django :: 4.0',
-        'Framework :: Django :: 4.1',
         'Framework :: Django :: 4.2',
+        'Framework :: Django :: 5.0',
+]
+dependencies = [
+  'Django>=3.2,<4.0;python_version>="3.8"',
+  'Django>=4.2,<4.3;python_version>="3.8"',
+  'Django>=5.0,<6.0;python_version>="3.10"',
 ]
 
 [project.urls]
 "Homepage" = "https://github.com/zsoldosp/django-currentuser"
 "Bug Tracker" = "https://github.com/zsoldosp/django-currentuser/issues"
+
+[tool.setuptools]
+packages = ["django_currentuser"]
 
