@@ -1,6 +1,9 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = [
+  "setuptools>=61.0.0",
+  "setuptools-scm[toml]>=5.0.0",
+]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-currentuser"
