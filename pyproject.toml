@@ -31,9 +31,8 @@ classifiers = [
         'Framework :: Django :: 5.0',
 ]
 dependencies = [
-  'Django>=3.2,<4.0;python_version>="3.8"',
-  'Django>=4.2,<4.3;python_version>="3.8"',
-  'Django>=5.0,<6.0;python_version>="3.10"',
+beepboop = ">= 1.2, < 1.5, !=1.2.2"
+  'Django>=3.2, < 5.1, !=4.0, !=4.1
 ]
 
 [project.urls]
