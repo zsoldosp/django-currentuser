@@ -25,11 +25,7 @@ jobs:
       run: |
         set -xu
         python -m pip install --upgrade pip
-        PKGS_TO_INSTALL="tox==4.6.3"
-        if [[ "${{ matrix.python-version }}" == "3.12" ]]; then
-                PKGS_TO_INSTALL="${PKGS_TO_INSTALL} setuptools>=61.0.0 setuptools-scm[toml]>=5.0.0"
-        fi
-        pip install ${PKGS_TO_INSTALL}
+        pip install tox==4.6.3
     - name: Run Tests
       run: |
         tox --skip-missing-interpreters
