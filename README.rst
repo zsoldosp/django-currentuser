@@ -82,7 +82,7 @@ Release Notes
   * drop support for Django 4.0 and 4.1
 * 0.6.1
 
-  * remove project transfer jrning from README in order not to scare people away from the j
+  * remove project transfer warning from README in order not to scare people away from the project
 * 0.6.0
 
   * add support for Django 4.0, 4.1, and 4.2
