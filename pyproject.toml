@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-currentuser"
-version = "0.8.0"
+dynamic = ["version", "readme", "dependencies"]
 authors = [
   { name="Peter Zsoldos", email="hello@zsoldosp.eu" },
 ]
@@ -15,7 +15,6 @@ maintainers = [
   { name="Peter Zsoldos", email="hello@zsoldosp.eu" },
 ]
 description = "Conveniently store reference to request user on thread/db level."
-readme = "README.rst"
 requires-python = ">=3.8"
 classifiers = [
         'Development Status :: 4 - Beta',
@@ -33,9 +32,6 @@ classifiers = [
         'Framework :: Django :: 5.0',
         'Framework :: Django :: 5.1',
 ]
-dependencies = [
-  'Django>=4.2, < 5.2'
-]
 
 [project.urls]
 "Homepage" = "https://github.com/zsoldosp/django-currentuser"
@@ -44,3 +40,6 @@ dependencies = [
 [tool.setuptools]
 packages = ["django_currentuser"]
 
+[tool.setuptools.dynamic]
+version = {attr = "django_currentuser.__version__"}
+readme = {file = ["README.rst"]}

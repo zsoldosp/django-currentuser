@@ -11,7 +11,21 @@ Install django-currentuser::
 
     pip install django-currentuser
 
-Add it to the middleware classes in your settings.py::
+Note: if there is a new Django version released that the library hasn't been
+upgraded to support yet, e.g.:
+
+```
+The conflict is caused by:
+    The user requested django==5.1
+    django-currentuser 0.8.0 depends on Django<5.1 and >=4.2
+```
+
+you can try to install it with the unsupported/untested Django version by
+using the `DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO` environment variable
+
+    DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO=1 pip install django-currentuser
+
+Ade it to the middleware classes in your settings.py::
 
     MIDDLEWARE = (
         ...,
@@ -60,6 +74,8 @@ Release Notes
 * 0.8.0
   * add support for Django 5.1
   * drop support for Django 3.2
+  * introduce `DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO` environment variable
+    to make upgrades easier
 * 0.7.0
   * add support for Django 5.0
   * add support for Python 3.12
