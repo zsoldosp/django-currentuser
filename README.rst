@@ -72,17 +72,22 @@ Release Notes
 -------------
 
 * 0.8.0
+
   * add support for Django 5.1
   * drop support for Django 3.2
   * introduce `DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO` environment variable
     to make upgrades easier
+
 * 0.7.0
+
   * add support for Django 5.0
   * add support for Python 3.12
   * drop support for Django 4.0 and 4.1
+
 * 0.6.1
 
   * remove project transfer warning from README in order not to scare people away from the project
+
 * 0.6.0
 
   * add support for Django 4.0, 4.1, and 4.2
