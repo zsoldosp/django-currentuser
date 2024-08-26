@@ -14,11 +14,9 @@ Install django-currentuser::
 Note: if there is a new Django version released that the library hasn't been
 upgraded to support yet, e.g.:
 
-```
-The conflict is caused by:
-    The user requested django==5.1
-    django-currentuser 0.8.0 depends on Django<5.1 and >=4.2
-```
+    The conflict is caused by:
+        The user requested django==5.1
+        django-currentuser 0.8.0 depends on Django<5.1 and >=4.2
 
 you can try to install it with the unsupported/untested Django version by
 using the `DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO` environment variable
