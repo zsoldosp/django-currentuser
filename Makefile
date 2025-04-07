@@ -6,7 +6,7 @@ ifeq ($(PYPI_SERVER),testpypi)
 else
 	TWINE_PASSWORD=${CURRENTUSER_TWINE_PASSWORD}
 endif
-RELEASE_PYTHON=python3.8
+RELEASE_PYTHON=python3.13
 GIT_REMOTE_NAME?=origin
 SHELL=/bin/bash
 VERSION=$(shell python3 -c"import django_currentuser as m; print(m.__version__)")
