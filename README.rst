@@ -69,6 +69,11 @@ Supported Versions
 Release Notes
 -------------
 
+* 0.8.1
+
+  * add support for Python 3.13
+  * add support for Django 5.2
+
 * 0.8.0
 
   * add support for Django 5.1
