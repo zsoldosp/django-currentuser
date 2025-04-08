@@ -7,9 +7,11 @@ else
 	TWINE_PASSWORD=${CURRENTUSER_TWINE_PASSWORD}
 endif
 RELEASE_PYTHON=python3.13
+RELEASE_VENV=release-venv-${RELEASE_PYTHON}
+RELEASE_PYTHON_ACTIVATE=${RELEASE_VENV}/bin/activate
 GIT_REMOTE_NAME?=origin
 SHELL=/bin/bash
-VERSION=$(shell python3 -c"import django_currentuser as m; print(m.__version__)")
+VERSION=$(shell ${RELEASE_PYTHON} -c"import django_currentuser as m; print(m.__version__)")
 PACKAGE_FILE_TGZ=dist/django_currentuser-${VERSION}.tar.gz
 PACKAGE_FILE_WHL=dist/django_currentuser-${VERSION}-py3-none-any.whl
 
@@ -72,14 +74,17 @@ else
 	@echo "git tag -a ${TAG} -m"${TAG}"; git push --tags ${GIT_REMOTE_NAME}"
 endif
 
-build-deps: 
-	${RELEASE_PYTHON} -m pip install --upgrade build
-	${RELEASE_PYTHON} -m pip install --upgrade twine
+${RELEASE_VENV}:
+	virtualenv --python ${RELEASE_PYTHON} ${RELEASE_VENV}
+
+build-deps: ${RELEASE_VENV}
+	source ${RELEASE_PYTHON_ACTIVATE} && python -m pip install --upgrade build
+	source ${RELEASE_PYTHON_ACTIVATE} && python -m pip install --upgrade twine
 
 
 ${PACKAGE_FILE_TGZ}: django_currentuser/ pyproject.toml Makefile setup.py setup.cfg
 ${PACKAGE_FILE_WHL}: django_currentuser/ pyproject.toml Makefile setup.py setup.cfg
-	${RELEASE_PYTHON} -m build
+	source ${RELEASE_PYTHON_ACTIVATE} && python -m build
 
 package: build-deps clean-build clean-python ${PACKAGE_FILE} ${PACKAGE_FILE_WHL}
 
@@ -93,4 +98,4 @@ endif
 	twine check dist/*
 	echo "if the release fails, setup a ~/pypirc file as per https://packaging.python.org/en/latest/tutorials/packaging-projects/"
 	# env | grep TWINE
-	TWINE_PASSWORD=${TWINE_PASSWORD} python3 -m twine upload --repository ${PYPI_SERVER} dist/* --verbose
+	source ${RELEASE_PYTHON_ACTIVATE} && TWINE_PASSWORD=${TWINE_PASSWORD} python -m twine upload --repository ${PYPI_SERVER} dist/* --verbose
