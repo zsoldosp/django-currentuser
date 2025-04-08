@@ -59,11 +59,11 @@ coverage:
 	coverage html
 	open htmlcov/index.html
 
-docs: outfile=/tmp/readme-errors
+docs: errfile=/tmp/readme-errors
 docs:
-	rst2html.py README.rst > /dev/null 2> ${outfile}
-	cat ${outfile}
-	test 0 -eq `cat ${outfile} | wc -l`
+	docutils README.rst > /dev/null 2> ${errfile}
+	cat ${errfile}
+	test 0 -eq `cat ${errfile} | wc -l`
 
 tag: TAG:=v${VERSION}
 tag: exit_code=$(shell git ls-remote ${GIT_REMOTE_NAME} | grep -q tags/${TAG}; echo $$?)
