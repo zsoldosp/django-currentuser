@@ -23,7 +23,7 @@ using the `DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO` environment variable
 
     DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO=1 pip install django-currentuser
 
-Ade it to the middleware classes in your settings.py::
+Add it to the middleware classes in your settings.py::
 
     MIDDLEWARE = (
         ...,
