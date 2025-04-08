@@ -77,6 +77,7 @@ Release Notes
 
 * 0.9.0
 
+  * by @bartvanandel
   * add support for Python 3.13
   * add support for Django 5.2
   * drop support for Python 3.8
