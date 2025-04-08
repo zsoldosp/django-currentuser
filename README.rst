@@ -202,7 +202,9 @@ Setting up all Python versions
     sudo apt-get update
     for version in 3.9 3.10 3.11 3.12 3.13; do
       py=python$version
-      sudo apt-get -y install ${py} ${py}-dev
+      if ! which ${py}; then
+        sudo apt-get -y install ${py} ${py}-dev
+      fi
     done
     sudo add-apt-repository --remove ppa:deadsnakes/ppa
     sudo apt-get update
