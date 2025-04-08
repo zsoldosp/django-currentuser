@@ -66,6 +66,12 @@ Supported Versions
   and https://www.djangoproject.com/download/#supported-versions (assuming the Python version
   listed there is supported)
 
+Note on [semver](https://semver.org/): While the fact that Django support stopped for version
+X, doesn't have to mean it's a breaking change for this lib, as it would be just a
+backward-compatible metadata patch, no code change. However, at some point support needs to be
+dropped - so for simplicity, the project follows what Django supports. If someone needs to use
+different, unsupported version, `DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO` allows for it.
+
 Release Notes
 -------------
 
