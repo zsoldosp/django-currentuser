@@ -198,12 +198,14 @@ Setting up all Python versions
 ::
 
     sudo apt-get -y install software-properties-common
-    sudo add-apt-repository ppa:fkrull/deadsnakes
+    sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt-get update
     for version in 3.8 3.9 3.10 3.11; do
       py=python$version
       sudo apt-get -y install ${py} ${py}-dev
     done
+    sudo add-apt-repository --remove ppa:deadsnakes/ppa
+    sudo apt-get update
 
 Code of Conduct
 ~~~~~~~~~~~~~~~
