@@ -75,6 +75,10 @@ different, unsupported version, `DJANGO_CURRENTUSER_USE_UNSUPPORTED_DJANGO` allo
 Release Notes
 -------------
 
+* 0.11.0
+
+  * add support for Django 6.1
+
 * 0.10.0
 
   * by @adiorz
